@@ -5,9 +5,13 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { MESSAGE } from '../../constants/message';
 
 const initialInfo = {
     firstName: '',
@@ -25,70 +29,110 @@ export default function Register() {
         setRegisterInfo({ ...registerInfo, [name]: value });
     };
 
+    const checkError = () => {
+        return errorMessage.firstName
+    }
+
     const handleRegister = () => {
+        if (checkError()) {
+            console.log('error');
+            return;
+        }
         console.log(registerInfo);
     };
+
+    const errorMessage = React.useMemo(() => {
+        return {
+            firstName: !registerInfo.firstName ? MESSAGE.REQUIRED : '',
+            lastName: !registerInfo.lastName ? MESSAGE.REQUIRED : '',
+            email: !registerInfo.email ? MESSAGE.REQUIRED : '',
+            password: !registerInfo.password ? MESSAGE.REQUIRED : '',
+        }
+    }, [registerInfo])
 
     return (
         <Container component="main" maxWidth="xs">
             <Grid container item xs={12} display="flex" flexDirection="column" alignItems="center">
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <PersonAddIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Register
                 </Typography>
                 <Box component="form" sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                autoComplete="off"
-                                name="firstName"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="First Name"
-                                autoFocus
-                                value={registerInfo.firstName}
-                                onInput={handleInput}
-                            />
+                        <Grid item xs={12} sm={6} mb={1}>
+                            <FormControl fullWidth error>
+                                <TextField
+                                    fullWidth
+                                    id="firstName"
+                                    name="firstName"
+                                    label="First Name"
+                                    autoComplete="off"
+                                    value={registerInfo.firstName}
+                                    onInput={handleInput}
+                                    error={!!errorMessage.firstName}
+                                    InputProps={{
+                                        endAdornment: errorMessage.firstName && <ErrorOutlineIcon color='error' />
+                                    }}
+                                />
+                                <FormHelperText sx={{ height: 2 }}>{errorMessage.firstName}</FormHelperText>
+                            </FormControl>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="off"
-                                value={registerInfo.lastName}
-                                onInput={handleInput}
-                            />
+                        <Grid item xs={12} sm={6} mb={1}>
+                            <FormControl fullWidth error>
+                                <TextField
+                                    fullWidth
+                                    id="lastName"
+                                    name="lastName"
+                                    label="Last Name"
+                                    autoComplete="off"
+                                    value={registerInfo.lastName}
+                                    onInput={handleInput}
+                                    error={!!errorMessage.lastName}
+                                    InputProps={{
+                                        endAdornment: errorMessage.lastName && <ErrorOutlineIcon color='error' />
+                                    }}
+                                />
+                                <FormHelperText sx={{ height: 2 }}>{errorMessage.lastName}</FormHelperText>
+                            </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="off"
-                                value={registerInfo.email}
-                                onInput={handleInput}
-                            />
+                        <Grid item xs={12} mb={1}>
+                            <FormControl fullWidth error>
+                                <TextField
+                                    fullWidth
+                                    id="email"
+                                    name="email"
+                                    label="Email Address"
+                                    autoComplete="off"
+                                    value={registerInfo.email}
+                                    onInput={handleInput}
+                                    error={!!errorMessage.email}
+                                    InputProps={{
+                                        endAdornment: errorMessage.email && <ErrorOutlineIcon color='error' />
+                                    }}
+                                />
+                                <FormHelperText sx={{ height: 2 }}>{errorMessage.email}</FormHelperText>
+                            </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="off"
-                                value={registerInfo.password}
-                                onInput={handleInput}
-                            />
+                        <Grid item xs={12} mb={1}>
+                            <FormControl fullWidth error>
+                                <TextField
+                                    fullWidth
+                                    id="password"
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                    autoComplete="off"
+                                    value={registerInfo.password}
+                                    onInput={handleInput}
+                                    error={!!errorMessage.password}
+                                    InputProps={{
+                                        endAdornment: errorMessage.password && <ErrorOutlineIcon color='error' />
+                                    }}
+                                />
+                                <FormHelperText sx={{ height: 2 }}>{errorMessage.password}</FormHelperText>
+                            </FormControl>
                         </Grid>
                     </Grid>
                     <Button
@@ -107,7 +151,7 @@ export default function Register() {
                         </Grid>
                     </Grid>
                 </Box>
-            </Grid>
+            </Grid >
         </Container >
     );
 }

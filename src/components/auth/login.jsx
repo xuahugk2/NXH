@@ -6,10 +6,11 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { useNavigate } from 'react-router-dom';
-import { FormControl, FormHelperText } from '@mui/material';
+import { MESSAGE } from '../../constants/message';
 
 const initialInfo = {
     email: '',
@@ -18,8 +19,6 @@ const initialInfo = {
 
 export default function Login() {
     const [loginInfo, setLoginInfo] = React.useState(initialInfo);
-
-    const navigate = useNavigate();
 
     const handleInput = (event) => {
         const { name, value } = event.target;
@@ -33,15 +32,16 @@ export default function Login() {
 
     const handleLogin = () => {
         if (checkError()) {
+            console.log('error');
             return;
         }
-        navigate('/');
+        console.log(loginInfo);
     };
 
     const errorMessage = React.useMemo(() => {
         return {
-            email: !loginInfo.email ? 'This field is required.' : '',
-            password: !loginInfo.password ? 'This field is required.' : '',
+            email: !loginInfo.email ? MESSAGE.REQUIRED : '',
+            password: !loginInfo.password ? MESSAGE.REQUIRED : '',
         }
     }, [loginInfo.email, loginInfo.password])
 
@@ -49,7 +49,7 @@ export default function Login() {
         <Container component="main" maxWidth="xs">
             <Grid container item xs={12} display="flex" flexDirection="column" alignItems="center">
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <AccountCircleIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Login
@@ -58,14 +58,12 @@ export default function Login() {
                     <Grid item xs={12} mb={1}>
                         <FormControl fullWidth error>
                             <TextField
-                                margin="normal"
-                                required
                                 fullWidth
+                                margin="normal"
                                 id="email"
-                                label="Email Address"
                                 name="email"
+                                label="Email Address"
                                 autoComplete="off"
-                                autoFocus
                                 value={loginInfo.email}
                                 onInput={handleInput}
                                 error={!!errorMessage.email}
@@ -79,13 +77,12 @@ export default function Login() {
                     <Grid item xs={12} mb={1}>
                         <FormControl fullWidth error>
                             <TextField
-                                margin="normal"
-                                required
                                 fullWidth
+                                margin="normal"
+                                id="password"
                                 name="password"
                                 label="Password"
                                 type="password"
-                                id="password"
                                 autoComplete="off"
                                 value={loginInfo.password}
                                 onInput={handleInput}
