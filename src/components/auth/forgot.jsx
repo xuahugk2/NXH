@@ -57,7 +57,7 @@ export default function ForgotPassword() {
                                 onInput={handleInput}
                                 error={!!errorMessage}
                                 InputProps={{
-                                    endAdornment: errorMessage && <ErrorOutlineIcon color='error' />
+                                    endAdornment: errorMessage && <ErrorOutlineIcon color='error' />,
                                 }}
                             />
                             <FormHelperText sx={{ height: 2 }}>{errorMessage}</FormHelperText>

@@ -28,7 +28,7 @@ export default function Login() {
 
     const checkError = () => {
         return errorMessage.email || errorMessage.password;
-    }
+    };
 
     const handleLogin = () => {
         if (checkError()) {
@@ -42,8 +42,8 @@ export default function Login() {
         return {
             email: !loginInfo.email ? MESSAGE.REQUIRED : '',
             password: !loginInfo.password ? MESSAGE.REQUIRED : '',
-        }
-    }, [loginInfo.email, loginInfo.password])
+        };
+    }, [loginInfo.email, loginInfo.password]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -68,7 +68,7 @@ export default function Login() {
                                 onInput={handleInput}
                                 error={!!errorMessage.email}
                                 InputProps={{
-                                    endAdornment: errorMessage.email && <ErrorOutlineIcon color='error' />
+                                    endAdornment: errorMessage.email && <ErrorOutlineIcon color='error' />,
                                 }}
                             />
                             <FormHelperText sx={{ height: 2 }} >{errorMessage.email}</FormHelperText>
@@ -88,7 +88,7 @@ export default function Login() {
                                 onInput={handleInput}
                                 error={!!errorMessage.password}
                                 InputProps={{
-                                    endAdornment: errorMessage.password && <ErrorOutlineIcon color='error' />
+                                    endAdornment: errorMessage.password && <ErrorOutlineIcon color='error' />,
                                 }}
                             />
                             <FormHelperText sx={{ height: 2 }} >{errorMessage.password}</FormHelperText>

@@ -30,8 +30,8 @@ export default function Register() {
     };
 
     const checkError = () => {
-        return errorMessage.firstName
-    }
+        return errorMessage.firstName;
+    };
 
     const handleRegister = () => {
         if (checkError()) {
@@ -47,8 +47,8 @@ export default function Register() {
             lastName: !registerInfo.lastName ? MESSAGE.REQUIRED : '',
             email: !registerInfo.email ? MESSAGE.REQUIRED : '',
             password: !registerInfo.password ? MESSAGE.REQUIRED : '',
-        }
-    }, [registerInfo])
+        };
+    }, [registerInfo]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -73,7 +73,7 @@ export default function Register() {
                                     onInput={handleInput}
                                     error={!!errorMessage.firstName}
                                     InputProps={{
-                                        endAdornment: errorMessage.firstName && <ErrorOutlineIcon color='error' />
+                                        endAdornment: errorMessage.firstName && <ErrorOutlineIcon color='error' />,
                                     }}
                                 />
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.firstName}</FormHelperText>
@@ -91,7 +91,7 @@ export default function Register() {
                                     onInput={handleInput}
                                     error={!!errorMessage.lastName}
                                     InputProps={{
-                                        endAdornment: errorMessage.lastName && <ErrorOutlineIcon color='error' />
+                                        endAdornment: errorMessage.lastName && <ErrorOutlineIcon color='error' />,
                                     }}
                                 />
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.lastName}</FormHelperText>
@@ -109,7 +109,7 @@ export default function Register() {
                                     onInput={handleInput}
                                     error={!!errorMessage.email}
                                     InputProps={{
-                                        endAdornment: errorMessage.email && <ErrorOutlineIcon color='error' />
+                                        endAdornment: errorMessage.email && <ErrorOutlineIcon color='error' />,
                                     }}
                                 />
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.email}</FormHelperText>
@@ -128,7 +128,7 @@ export default function Register() {
                                     onInput={handleInput}
                                     error={!!errorMessage.password}
                                     InputProps={{
-                                        endAdornment: errorMessage.password && <ErrorOutlineIcon color='error' />
+                                        endAdornment: errorMessage.password && <ErrorOutlineIcon color='error' />,
                                     }}
                                 />
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.password}</FormHelperText>

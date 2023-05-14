@@ -1,12 +1,12 @@
-import './App.css'
-import SignIn from './components/auth/login'
-import Register from './components/auth/register'
-import ForgotPassword from './components/auth/forgot'
+import './App.css';
+import SignIn from './components/auth/login';
+import Register from './components/auth/register';
+import ForgotPassword from './components/auth/forgot';
 import {
     BrowserRouter,
     Route,
     Routes,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 function App() {
     return (
@@ -18,10 +18,10 @@ function App() {
                 <Route path='/forgot-password' element={<ForgotPassword />} />
 
                 {/* Main */}
-                <Route path='/' element={<ForgotPassword />} />
+                <Route path='/' element={<div>Hello.</div>} />
             </Routes>
         </BrowserRouter>
-    )
+    );
 }
 
-export default App
+export default App;
