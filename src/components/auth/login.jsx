@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
@@ -20,6 +23,9 @@ const initialInfo = {
 export default function Login() {
     const [loginInfo, setLoginInfo] = React.useState(initialInfo);
 
+    const [isOpenErrorDialog, setIsOpenErrorDialog] = React.useState(false);
+    const [apiMessage, setApiMessage] = React.useState('');
+
     const handleInput = (event) => {
         const { name, value } = event.target;
 
@@ -30,12 +36,17 @@ export default function Login() {
         return errorMessage.email || errorMessage.password;
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (checkError()) {
             console.log('error');
             return;
         }
-        console.log(loginInfo);
+        await axios.post('http://localhost:5000/api/login', loginInfo)
+            .then(res => console.log(res.data))
+            .catch(err => {
+                setApiMessage(err.response.data.message);
+                setIsOpenErrorDialog(true);
+            });
     };
 
     const errorMessage = React.useMemo(() => {
@@ -116,6 +127,16 @@ export default function Login() {
                     </Grid>
                 </Grid>
             </Grid>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={isOpenErrorDialog}
+                autoHideDuration={5000}
+                onClose={() => setIsOpenErrorDialog(false)}
+            >
+                <Alert onClose={() => setIsOpenErrorDialog(false)} severity="error" sx={{ width: '100%' }}>
+                    {apiMessage}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }
