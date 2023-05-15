@@ -11,6 +11,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
+import { enqueueSuccessSnackbar } from '../snackbars/enqueueSnackbar';
 
 export default function ForgotPassword() {
     const [email, setEmail] = React.useState('');
@@ -29,6 +30,7 @@ export default function ForgotPassword() {
             return;
         }
         console.log({ email });
+        enqueueSuccessSnackbar('Reset password success.');
     };
 
     const errorMessage = React.useMemo(() => {

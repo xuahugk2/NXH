@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -12,6 +13,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
+import { enqueueSuccessSnackbar, enqueueErrorSnackbar } from '../snackbars/enqueueSnackbar';
 
 const initialInfo = {
     firstName: '',
@@ -33,12 +35,18 @@ export default function Register() {
         return errorMessage.firstName;
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if (checkError()) {
             console.log('error');
             return;
         }
-        console.log(registerInfo);
+        await axios.post('http://localhost:5000/api/register', registerInfo)
+            .then(response =>
+                enqueueSuccessSnackbar(response.data.message),
+            )
+            .catch(error =>
+                enqueueErrorSnackbar(error.response.data.message),
+            );
     };
 
     const errorMessage = React.useMemo(() => {
