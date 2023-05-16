@@ -22,15 +22,62 @@ const handleEnqueueSnackbar = (status, message) => {
     }
 };
 
-export const httpPOST = async (url, body, successCallback, errorCallback) => {
+export const httpGET = async (url, successCallback, errorCallback) => {
     await axios
-        .post(url, body)
+        .get(url)
         .then(response => {
+            console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
             if (successCallback) successCallback(response.data);
         })
         .catch(error => {
-            handleEnqueueSnackbar(error.status, error.data.message);
+            console.log(error);
+            handleEnqueueSnackbar(error.response.status, error.response.data.message);
+            if (errorCallback) errorCallback(error.response.data);
+        });
+};
+
+export const httpPOST = async (url, body, successCallback, errorCallback) => {
+    await axios
+        .post(url, body)
+        .then(response => {
+            console.log(response);
+            handleEnqueueSnackbar(response.status, response.data.message);
+            if (successCallback) successCallback(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+            handleEnqueueSnackbar(error.response.status, error.response.data.message);
+            if (errorCallback) errorCallback(error.response.data);
+        });
+};
+
+export const httpPUT = async (url, body, successCallback, errorCallback) => {
+    await axios
+        .put(url, body)
+        .then(response => {
+            console.log(response);
+            handleEnqueueSnackbar(response.status, response.data.message);
+            if (successCallback) successCallback(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+            handleEnqueueSnackbar(error.response.status, error.response.data.message);
+            if (errorCallback) errorCallback(error.response.data);
+        });
+};
+
+export const httpDELETE = async (url, successCallback, errorCallback) => {
+    await axios
+        .delete(url)
+        .then(response => {
+            console.log(response);
+            handleEnqueueSnackbar(response.status, response.data.message);
+            if (successCallback) successCallback(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+            handleEnqueueSnackbar(error.response.status, error.response.data.message);
             if (errorCallback) errorCallback(error.response.data);
         });
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -13,7 +13,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
-import { enqueueSuccessSnackbar, enqueueErrorSnackbar } from '../snackbars/enqueueSnackbar';
+import authAction from '../../actions/authAction';
 
 const initialInfo = {
     firstName: '',
@@ -24,6 +24,10 @@ const initialInfo = {
 
 export default function Register() {
     const [registerInfo, setRegisterInfo] = React.useState(initialInfo);
+
+    const { registerUser } = authAction();
+
+    const navigate = useNavigate();
 
     const handleInput = (event) => {
         const { name, value } = event.target;
@@ -40,13 +44,12 @@ export default function Register() {
             console.log('error');
             return;
         }
-        await axios.post('http://localhost:5000/api/register', registerInfo)
-            .then(response =>
-                enqueueSuccessSnackbar(response.data.message),
-            )
-            .catch(error =>
-                enqueueErrorSnackbar(error.response.data.message),
-            );
+        registerUser(registerInfo, handleRegisterSuccess);
+    };
+
+    const handleRegisterSuccess = (data) => {
+        console.log(data);
+        navigate('/login');
     };
 
     const errorMessage = React.useMemo(() => {

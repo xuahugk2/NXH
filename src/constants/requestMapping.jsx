@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-// eslint-disable-next-line no-undef
-const BASE_URL = process.env.API_URL;
+const BASE_URL = 'http://localhost:5000/api';
 
 export const MAPPING = {
     LOGIN: `${BASE_URL}/login`,
+    REGISTER: `${BASE_URL}/register`,
+    FORGOT_PASSWORD: `${BASE_URL}/forgot-password`,
 };
