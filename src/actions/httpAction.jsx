@@ -27,7 +27,6 @@ export const httpGET = async (url, successCallback, errorCallback) => {
         .get(url)
         .then(response => {
             console.log(response);
-            handleEnqueueSnackbar(response.status, response.data.message);
             if (successCallback) successCallback(response.data);
         })
         .catch(error => {
@@ -42,7 +41,6 @@ export const httpPOST = async (url, body, successCallback, errorCallback) => {
         .post(url, body)
         .then(response => {
             console.log(response);
-            handleEnqueueSnackbar(response.status, response.data.message);
             if (successCallback) successCallback(response.data);
         })
         .catch(error => {

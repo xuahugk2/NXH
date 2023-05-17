@@ -11,7 +11,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
-import authAction from '../../actions/authAction';
+import useAuthAction from '../../actions/hooks/authHook';
+import useAuthState from '../../reducers/hook/authHook';
 
 const initialInfo = {
     email: '',
@@ -21,7 +22,9 @@ const initialInfo = {
 export default function Login() {
     const [loginInfo, setLoginInfo] = React.useState(initialInfo);
 
-    const { loginUser } = authAction();
+    const { loginUser } = useAuthAction();
+
+    const { authInfo } = useAuthState();
 
     const handleInput = (event) => {
         const { name, value } = event.target;
@@ -34,6 +37,7 @@ export default function Login() {
     };
 
     const handleLogin = async () => {
+        console.log(authInfo);
         if (checkError()) {
             console.log('error');
             return;

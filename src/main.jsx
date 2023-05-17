@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
 import { SnackbarProvider } from 'notistack';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import App from './App.jsx';
+import rootReducer from './reducers/index.jsx';
 import './index.css';
+
+const store = createStore(rootReducer, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <SnackbarProvider maxSnack={5} autoHideDuration={5000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-            <App />
-        </SnackbarProvider>
+        <Provider store={store}>
+            <SnackbarProvider maxSnack={5} autoHideDuration={5000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <App />
+            </SnackbarProvider>
+        </Provider>
     </React.StrictMode>,
 );

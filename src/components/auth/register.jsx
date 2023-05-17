@@ -13,7 +13,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
-import authAction from '../../actions/authAction';
+import useAuthAction from '../../actions/hooks/authHook';
 
 const initialInfo = {
     firstName: '',
@@ -25,7 +25,7 @@ const initialInfo = {
 export default function Register() {
     const [registerInfo, setRegisterInfo] = React.useState(initialInfo);
 
-    const { registerUser } = authAction();
+    const { registerUser } = useAuthAction();
 
     const navigate = useNavigate();
 
@@ -47,8 +47,7 @@ export default function Register() {
         registerUser(registerInfo, handleRegisterSuccess);
     };
 
-    const handleRegisterSuccess = (data) => {
-        console.log(data);
+    const handleRegisterSuccess = () => {
         navigate('/login');
     };
 

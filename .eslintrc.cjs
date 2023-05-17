@@ -17,6 +17,5 @@ module.exports = {
         'comma-dangle': [2, 'always-multiline'],
         'eol-last': [2, 'windows'],
         'semi': [2, 'always'],
-        'max-len': [1, { code: 120 }],
     },
 };

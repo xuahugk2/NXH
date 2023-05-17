@@ -1,12 +1,16 @@
-import { httpPOST } from '../httpAction';
-import { MAPPING } from '../../constants/requestMapping';
+import { useDispatch } from 'react-redux';
+import { loginUser, registerUser } from '../authAction';
 
-export const loginUser = (body, successCallback, errorCallback) => {
-    const url = MAPPING.LOGIN;
-    httpPOST(url, body, successCallback, errorCallback);
-};
+function useAuthAction() {
+    const dispatch = useDispatch();
+    return {
+        loginUser: (body, successCallback, errorCallback) => {
+            dispatch(loginUser(body, successCallback, errorCallback));
+        },
+        registerUser: (body, successCallback, errorCallback) => {
+            dispatch(registerUser(body, successCallback, errorCallback));
+        },
+    };
+}
 
-export const registerUser = (body, successCallback, errorCallback) => {
-    const url = MAPPING.REGISTER;
-    httpPOST(url, body, successCallback, errorCallback);
-};
+export default useAuthAction;
