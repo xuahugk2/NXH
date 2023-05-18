@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -26,6 +27,8 @@ export default function Login() {
 
     const { authInfo } = useAuthState();
 
+    const navigate = useNavigate();
+
     const handleInput = (event) => {
         const { name, value } = event.target;
 
@@ -42,7 +45,11 @@ export default function Login() {
             console.log('error');
             return;
         }
-        loginUser(loginInfo);
+        loginUser(loginInfo, handleRegisterSuccess);
+    };
+
+    const handleRegisterSuccess = () => {
+        navigate('/');
     };
 
     const errorMessage = React.useMemo(() => {

@@ -48,7 +48,7 @@ export default function Register() {
     };
 
     const handleRegisterSuccess = () => {
-        navigate('/login');
+        navigate('/');
     };
 
     const errorMessage = React.useMemo(() => {
