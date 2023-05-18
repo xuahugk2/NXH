@@ -15,27 +15,35 @@ import { enqueueSuccessSnackbar } from '../snackbars/enqueueSnackbar';
 
 export default function ForgotPassword() {
     const [email, setEmail] = React.useState('');
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     const handleInput = (event) => {
-        setEmail(event.target.value);
+        const value = event.target.value;
+        setEmail(value);
+
+        if (value) {
+            setErrorMessage('');
+        }
     };
 
     const checkError = () => {
-        return !!errorMessage;
+        let cloneErrorMessage = '';
+        if (!email) {
+            cloneErrorMessage = MESSAGE.REQUIRED;
+        }
+
+        setErrorMessage(cloneErrorMessage);
+
+        return cloneErrorMessage;
     };
 
     const handleSubmit = () => {
         if (checkError()) {
-            console.log('error');
             return;
         }
         console.log({ email });
         enqueueSuccessSnackbar('Reset password success.');
     };
-
-    const errorMessage = React.useMemo(() => {
-        return !email ? MESSAGE.REQUIRED : '';
-    }, [email]);
 
     return (
         <Container component="main" maxWidth="xs">

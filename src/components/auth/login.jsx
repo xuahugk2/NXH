@@ -13,19 +13,17 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useAuthAction from '../../actions/hooks/authHook';
-import useAuthState from '../../reducers/hook/authHook';
 
-const initialInfo = {
+const initialState = {
     email: '',
     password: '',
 };
 
 export default function Login() {
-    const [loginInfo, setLoginInfo] = React.useState(initialInfo);
+    const [loginInfo, setLoginInfo] = React.useState(initialState);
+    const [errorMessage, setErrorMessage] = React.useState(initialState);
 
     const { loginUser } = useAuthAction();
-
-    const { authInfo } = useAuthState();
 
     const navigate = useNavigate();
 
@@ -33,16 +31,37 @@ export default function Login() {
         const { name, value } = event.target;
 
         setLoginInfo({ ...loginInfo, [name]: value });
+
+        if (value) {
+            setErrorMessage({
+                ...errorMessage,
+                [name]: '',
+            });
+        }
     };
 
     const checkError = () => {
-        return errorMessage.email || errorMessage.password;
+        let cloneErrorMessage = initialState;
+        if (!loginInfo.email) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                email: MESSAGE.REQUIRED,
+            };
+        }
+        if (!loginInfo.password) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                password: MESSAGE.REQUIRED,
+            };
+        }
+
+        setErrorMessage(cloneErrorMessage);
+
+        return cloneErrorMessage.email || cloneErrorMessage.password;
     };
 
     const handleLogin = async () => {
-        console.log(authInfo);
         if (checkError()) {
-            console.log('error');
             return;
         }
         loginUser(loginInfo, handleRegisterSuccess);
@@ -51,13 +70,6 @@ export default function Login() {
     const handleRegisterSuccess = () => {
         navigate('/');
     };
-
-    const errorMessage = React.useMemo(() => {
-        return {
-            email: !loginInfo.email ? MESSAGE.REQUIRED : '',
-            password: !loginInfo.password ? MESSAGE.REQUIRED : '',
-        };
-    }, [loginInfo.email, loginInfo.password]);
 
     return (
         <Container component="main" maxWidth="xs">
