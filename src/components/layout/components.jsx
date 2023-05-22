@@ -6,7 +6,7 @@ import {
 import Login from '../auth/login';
 import Register from '../auth/register';
 import ForgotPassword from '../auth/forgot';
-import Home from '../home/home';
+import Dashboard from '../dashboard/dashboard';
 
 export default function Components() {
     return (
@@ -18,7 +18,7 @@ export default function Components() {
                 <Route path='/forgot-password' element={<ForgotPassword />} />
 
                 {/* Main */}
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Dashboard />} />
             </Routes>
         </BrowserRouter>
     );

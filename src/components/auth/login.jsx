@@ -15,8 +15,8 @@ import { MESSAGE } from '../../constants/message';
 import useAuthAction from '../../actions/hooks/authHook';
 
 const initialState = {
-    email: 'user@gmail.com',
-    password: 'ivc@12345',
+    email: '',
+    password: '',
 };
 
 export default function Login() {
