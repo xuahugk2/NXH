@@ -1,12 +1,13 @@
-import './App.css';
-import SignIn from './components/auth/login';
-import Register from './components/auth/register';
-import ForgotPassword from './components/auth/forgot';
 import {
     BrowserRouter,
     Route,
     Routes,
 } from 'react-router-dom';
+import SignIn from './components/auth/login';
+import Register from './components/auth/register';
+import ForgotPassword from './components/auth/forgot';
+import Dashboard from './components/dashboard/dashboard';
+import './App.css';
 
 function App() {
     return (
@@ -17,8 +18,8 @@ function App() {
                 <Route path='/register' element={<Register />} />
                 <Route path='/forgot-password' element={<ForgotPassword />} />
 
-                {/* Main */}
-                <Route path='/' element={<div>Hello.</div>} />
+                {/* Dashboard */}
+                <Route path='/' element={<Dashboard />} />
             </Routes>
         </BrowserRouter>
     );

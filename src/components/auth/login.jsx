@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -15,12 +16,14 @@ import useAuthAction from '../../actions/hooks/authHook';
 import useAuthState from '../../reducers/hook/authHook';
 
 const initialInfo = {
-    email: '',
-    password: '',
+    email: 'user@gmail.com',
+    password: 'ivc@12345',
 };
 
 export default function Login() {
     const [loginInfo, setLoginInfo] = React.useState(initialInfo);
+
+    const navigate = useNavigate();
 
     const { loginUser } = useAuthAction();
 
@@ -42,7 +45,11 @@ export default function Login() {
             console.log('error');
             return;
         }
-        loginUser(loginInfo);
+        loginUser(loginInfo, handleLoginSuccess);
+    };
+
+    const handleLoginSuccess = () => {
+        navigate('/');
     };
 
     const errorMessage = React.useMemo(() => {
@@ -123,6 +130,6 @@ export default function Login() {
                     </Grid>
                 </Grid>
             </Grid>
-        </Container>
+        </Container >
     );
 }
