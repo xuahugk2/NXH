@@ -27,16 +27,24 @@ export default function Users() {
                     disableColumnMenu: true,
                 },
                 {
-                    field: 'firstName',
-                    headerName: 'First Name',
+                    field: 'fullName',
+                    headerName: 'Full Name',
                     flex: 1,
                     disableColumnMenu: true,
+                    valueGetter: (params) =>
+                        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
                 },
                 {
-                    field: 'lastName',
-                    headerName: 'Last Name',
+                    field: 'role',
+                    headerName: 'Authority',
                     flex: 1,
                     disableColumnMenu: true,
+                    valueFormatter: (params) => {
+                        if (params.value == null) {
+                            return '';
+                        }
+                        return params.value === 1 ? 'Admin' : 'User';
+                    },
                 },
                 {
                     field: 'createdAt',

@@ -1,13 +1,21 @@
 import { DataGrid } from '@mui/x-data-grid';
+import PropTypes from 'prop-types';
 
-export default function CustomDataGrid(props) {
-    // eslint-disable-next-line react/prop-types
-    const { data } = props;
+CustomDataGrid.propTypes = {
+    data: PropTypes.object.isRequired,
+};
+
+export default function CustomDataGrid({ data }) {
+    const { columns, rows, getRowId } = data;
 
     return (
         <DataGrid
-            {...data}
-            pageSizeOptions={[20]}
+            columns={columns}
+            rows={rows}
+            getRowId={getRowId}
+            loading={rows.length === 0}
+            paginationModel={{ pageSize: 20, page: 0 }}
+            hideFooterSelectedRowCount
         />
     );
 }

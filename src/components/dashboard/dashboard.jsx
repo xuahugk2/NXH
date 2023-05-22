@@ -15,7 +15,7 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './menu';
+import MainListItems from './menu';
 import Users from '../users/users';
 
 const drawerWidth = 240;
@@ -66,9 +66,21 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
+    const [component, setComponent] = React.useState('');
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    const displayItem = React.useMemo(() => {
+        switch (component) {
+            case 'users':
+                return <Users />;
+            default:
+                return <Box>Home.</Box>;
+        }
+
+    }, [component]);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -117,9 +129,7 @@ export default function Dashboard() {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    {mainListItems}
-                    <Divider sx={{ my: 1 }} />
-                    {secondaryListItems}
+                    <MainListItems changeItem={setComponent} />
                 </List>
             </Drawer>
             <Box
@@ -135,7 +145,7 @@ export default function Dashboard() {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                <Users />
+                                {displayItem}
                             </Paper>
                         </Grid>
                     </Grid>
