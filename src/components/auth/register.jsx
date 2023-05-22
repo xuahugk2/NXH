@@ -15,7 +15,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useAuthAction from '../../actions/hooks/authHook';
 
-const initialInfo = {
+const initialState = {
     firstName: '',
     lastName: '',
     email: '',
@@ -23,7 +23,8 @@ const initialInfo = {
 };
 
 export default function Register() {
-    const [registerInfo, setRegisterInfo] = React.useState(initialInfo);
+    const [registerInfo, setRegisterInfo] = React.useState(initialState);
+    const [errorMessage, setErrorMessage] = React.useState(initialState);
 
     const { registerUser } = useAuthAction();
 
@@ -33,10 +34,45 @@ export default function Register() {
         const { name, value } = event.target;
 
         setRegisterInfo({ ...registerInfo, [name]: value });
+
+        if (value) {
+            setErrorMessage({
+                ...errorMessage,
+                [name]: '',
+            });
+        }
     };
 
     const checkError = () => {
-        return errorMessage.firstName;
+        let cloneErrorMessage = initialState;
+        if (!registerInfo.email) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                email: MESSAGE.REQUIRED,
+            };
+        }
+        if (!registerInfo.password) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                password: MESSAGE.REQUIRED,
+            };
+        }
+        if (!registerInfo.firstName) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                firstName: MESSAGE.REQUIRED,
+            };
+        }
+        if (!registerInfo.lastName) {
+            cloneErrorMessage = {
+                ...cloneErrorMessage,
+                lastName: MESSAGE.REQUIRED,
+            };
+        }
+
+        setErrorMessage(cloneErrorMessage);
+
+        return cloneErrorMessage.email || cloneErrorMessage.password || cloneErrorMessage.firstName || cloneErrorMessage.lastName;
     };
 
     const handleRegister = async () => {
@@ -48,17 +84,8 @@ export default function Register() {
     };
 
     const handleRegisterSuccess = () => {
-        navigate('/login');
+        navigate('/');
     };
-
-    const errorMessage = React.useMemo(() => {
-        return {
-            firstName: !registerInfo.firstName ? MESSAGE.REQUIRED : '',
-            lastName: !registerInfo.lastName ? MESSAGE.REQUIRED : '',
-            email: !registerInfo.email ? MESSAGE.REQUIRED : '',
-            password: !registerInfo.password ? MESSAGE.REQUIRED : '',
-        };
-    }, [registerInfo]);
 
     return (
         <Container component="main" maxWidth="xs">
