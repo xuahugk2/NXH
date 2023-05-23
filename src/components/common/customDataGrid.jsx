@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
 
@@ -7,14 +8,15 @@ CustomDataGrid.propTypes = {
 
 export default function CustomDataGrid({ data }) {
     const { columns, rows, getRowId } = data;
+    const [paginationModel, setPaginationModel] = React.useState({ pageSize: 7, page: 0 });
 
     return (
         <DataGrid
             columns={columns}
             rows={rows}
             getRowId={getRowId}
-            loading={rows.length === 0}
-            paginationModel={{ pageSize: 20, page: 0 }}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
             hideFooterSelectedRowCount
         />
     );
