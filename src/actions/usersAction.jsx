@@ -1,10 +1,11 @@
 import { httpGET } from './httpAction';
 import { MAPPING } from './../constants/requestMapping';
 import { UPDATE_LIST_USER } from '../constants/actionType';
+import { serializeParameters } from '../utils/helper';
 
 export const getListUser = (body, successCallback, errorCallback) => {
     return (dispatch) => {
-        const url = MAPPING.GET_LIST_USER;
+        const url = MAPPING.GET_LIST_USER + serializeParameters(body);
         const successFunc = (data) => {
             dispatch(updateUserList(data));
             if (successCallback) successCallback();

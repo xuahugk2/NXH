@@ -13,6 +13,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useAuthAction from '../../actions/hooks/authHook';
+import { customTheme } from '../common/customTheme';
 
 const initialState = {
     email: '',
@@ -72,7 +73,7 @@ export default function Login() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={customTheme.justify}>
             <Grid container item xs={12} display="flex" flexDirection="column" alignItems="center">
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <AccountCircleIcon />

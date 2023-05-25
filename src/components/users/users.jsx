@@ -13,9 +13,8 @@ export default function Users() {
     const { users } = useUsersState();
 
     React.useEffect(() => {
-        getListUser(authInfo._id);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authInfo._id]);
+        getListUser({ _id: authInfo._id });
+    }, [authInfo._id, getListUser]);
 
     const data = React.useMemo(() => {
         return {

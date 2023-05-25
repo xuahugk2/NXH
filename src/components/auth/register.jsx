@@ -14,6 +14,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useAuthAction from '../../actions/hooks/authHook';
+import { customTheme } from '../common/customTheme';
 
 const initialState = {
     firstName: '',
@@ -88,7 +89,7 @@ export default function Register() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={customTheme.justify}>
             <Grid container item xs={12} display="flex" flexDirection="column" alignItems="center">
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <PersonAddIcon />

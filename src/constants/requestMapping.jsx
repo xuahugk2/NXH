@@ -5,5 +5,5 @@ export const MAPPING = {
     LOGIN: `${BASE_URL}/login`,
     REGISTER: `${BASE_URL}/register`,
     FORGOT_PASSWORD: `${BASE_URL}/forgot-password`,
-    GET_LIST_USER: `${BASE_URL}/users`,
+    GET_LIST_USER: `${BASE_URL}/users/list`,
 };

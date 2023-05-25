@@ -12,6 +12,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import { enqueueSuccessSnackbar } from '../snackbars/enqueueSnackbar';
+import { customTheme } from '../common/customTheme';
 
 export default function ForgotPassword() {
     const [email, setEmail] = React.useState('');
@@ -46,7 +47,7 @@ export default function ForgotPassword() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={customTheme.justify}>
             <Grid container item xs={12} flexDirection="column" alignItems="center">
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <ManageAccountsIcon />

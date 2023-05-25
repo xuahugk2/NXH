@@ -27,7 +27,7 @@ export const httpGET = async (url, successCallback, errorCallback) => {
         .get(url)
         .then(response => {
             console.log(response);
-            if (successCallback) successCallback(response.data);
+            if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {
             console.log(error);
@@ -41,7 +41,7 @@ export const httpPOST = async (url, body, successCallback, errorCallback) => {
         .post(url, body)
         .then(response => {
             console.log(response);
-            if (successCallback) successCallback(response.data);
+            if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {
             console.log(error);
@@ -56,7 +56,7 @@ export const httpPUT = async (url, body, successCallback, errorCallback) => {
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
-            if (successCallback) successCallback(response.data);
+            if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {
             console.log(error);
@@ -71,7 +71,7 @@ export const httpDELETE = async (url, successCallback, errorCallback) => {
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
-            if (successCallback) successCallback(response.data);
+            if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {
             console.log(error);

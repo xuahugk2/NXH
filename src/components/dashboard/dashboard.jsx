@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -17,6 +18,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MainListItems from './menu';
 import Users from '../users/users';
+import useAuthState from '../../reducers/hook/authHook';
 
 const drawerWidth = 240;
 
@@ -68,9 +70,19 @@ export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
     const [component, setComponent] = React.useState('');
 
+    const { authInfo } = useAuthState();
+
+    const navigate = useNavigate();
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    React.useEffect(() => {
+        if (!(authInfo && authInfo._id)) {
+            navigate('/login');
+        }
+    });
 
     const displayItem = React.useMemo(() => {
         switch (component) {

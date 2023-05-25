@@ -11,11 +11,11 @@ import './index.css';
 const store = createStore(rootReducer, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+    <React.Fragment>
         <Provider store={store}>
             <SnackbarProvider maxSnack={5} autoHideDuration={5000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
                 <App />
             </SnackbarProvider>
         </Provider>
-    </React.StrictMode>,
+    </React.Fragment>,
 );
