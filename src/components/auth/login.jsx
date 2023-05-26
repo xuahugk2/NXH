@@ -21,7 +21,10 @@ const initialState = {
 };
 
 export default function Login() {
-    const [loginInfo, setLoginInfo] = React.useState(initialState);
+    const [loginInfo, setLoginInfo] = React.useState({
+        email: 'admin@gmail.com',
+        password: 'ivc@12345',
+    });
     const [errorMessage, setErrorMessage] = React.useState(initialState);
 
     const { loginUser } = useAuthAction();
