@@ -5,12 +5,17 @@ import useUsersState from '../../reducers/hook/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
 import Title from '../common/title';
 import CustomDataGrid from '../common/customDataGrid';
+import UpdateAccountDialog from './updateAccountDialog';
 import { Button } from '@mui/material';
 import {
     Delete as DeleteIcon,
+    EditNote as EditNoteIcon,
 } from '@mui/icons-material';
 
 export default function Users() {
+    const [open, setOpen] = React.useState(false);
+    const [selectedAccountId, setSelectedAccountId] = React.useState('');
+
     const { getListUser, deleteUser } = useUsersAction();
 
     const { authInfo } = useAuthState();
@@ -77,7 +82,7 @@ export default function Users() {
                 {
                     field: 'action',
                     headerName: 'Action',
-                    flex: 0.5,
+                    flex: 1,
                     disableColumnMenu: true,
                     sortable: false,
                     renderCell: (params) => renderActionButtons(params.row),
@@ -91,14 +96,24 @@ export default function Users() {
 
     const renderActionButtons = (row) => {
         return (
-            <Button onClick={() => handleDeleteAccount(row._id)}>
-                <DeleteIcon color='error' />
-            </Button>
+            <React.Fragment>
+                <Button onClick={() => handleUpdateAccount(row._id)}>
+                    <EditNoteIcon color='success' />
+                </Button>
+                <Button onClick={() => handleDeleteAccount(row._id)}>
+                    <DeleteIcon color='error' />
+                </Button>
+            </React.Fragment>
         );
     };
 
     const handleDeleteAccount = (id) => {
         deleteUser(id);
+    };
+
+    const handleUpdateAccount = (id) => {
+        setSelectedAccountId(id);
+        setOpen(true);
     };
 
     return (
@@ -107,6 +122,7 @@ export default function Users() {
             <CustomDataGrid
                 data={data}
             />
+            <UpdateAccountDialog open={open} setOpen={setOpen} accountId={selectedAccountId} />
         </React.Fragment>
     );
 }
