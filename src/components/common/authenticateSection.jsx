@@ -13,9 +13,12 @@ import {
     Settings,
     Logout,
 } from '@mui/icons-material';
+import useAuthAction from '../../actions/hooks/authHook';
 
 export default function AuthenticateSection() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const { logoutUser } = useAuthAction();
 
     const open = useMemo(() => {
         return Boolean(anchorEl);
@@ -36,7 +39,6 @@ export default function AuthenticateSection() {
                     <IconButton
                         onClick={handleClick}
                         size="small"
-                        sx={{ ml: 2 }}
                         aria-controls={open ? 'account-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
@@ -93,7 +95,7 @@ export default function AuthenticateSection() {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => logoutUser()}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

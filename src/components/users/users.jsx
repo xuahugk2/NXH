@@ -5,16 +5,21 @@ import useUsersState from '../../reducers/hook/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
 import Title from '../common/title';
 import CustomDataGrid from '../common/customDataGrid';
+import { Button } from '@mui/material';
+import {
+    Delete as DeleteIcon,
+} from '@mui/icons-material';
 
 export default function Users() {
-    const { getListUser } = useUsersAction();
+    const { getListUser, deleteUser } = useUsersAction();
 
     const { authInfo } = useAuthState();
     const { users } = useUsersState();
 
     React.useEffect(() => {
         getListUser({ _id: authInfo._id });
-    }, [authInfo._id, getListUser]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const data = React.useMemo(() => {
         return {
@@ -69,11 +74,32 @@ export default function Users() {
                         return moment(params.value).format('YYYY/MM/DD HH:MM:SS');
                     },
                 },
+                {
+                    field: 'action',
+                    headerName: 'Action',
+                    flex: 0.5,
+                    disableColumnMenu: true,
+                    sortable: false,
+                    renderCell: (params) => renderActionButtons(params.row),
+                },
             ],
             rows: users,
             getRowId: (row) => row?._id,
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [users]);
+
+    const renderActionButtons = (row) => {
+        return (
+            <Button onClick={() => handleDeleteAccount(row._id)}>
+                <DeleteIcon color='error' />
+            </Button>
+        );
+    };
+
+    const handleDeleteAccount = (id) => {
+        deleteUser(id);
+    };
 
     return (
         <React.Fragment>

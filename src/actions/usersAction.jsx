@@ -1,4 +1,4 @@
-import { httpGET } from './httpAction';
+import { httpDELETE, httpGET } from './httpAction';
 import { MAPPING } from './../constants/requestMapping';
 import { UPDATE_LIST_USER } from '../constants/actionType';
 import { serializeParameters } from '../utils/helper';
@@ -11,6 +11,17 @@ export const getListUser = (body, successCallback, errorCallback) => {
             if (successCallback) successCallback();
         };
         httpGET(url, successFunc, errorCallback);
+    };
+};
+
+export const deleteUser = (param, successCallback, errorCallback) => {
+    return (dispatch) => {
+        const url = MAPPING.DELETE_USER + param;
+        const successFunc = (data) => {
+            dispatch(updateUserList(data));
+            if (successCallback) successCallback();
+        };
+        httpDELETE(url, successFunc, errorCallback);
     };
 };
 

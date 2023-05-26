@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { loginUser, registerUser } from '../authAction';
+import { loginUser, registerUser, logoutUser } from '../authAction';
 
 function useAuthAction() {
     const dispatch = useDispatch();
@@ -9,6 +9,9 @@ function useAuthAction() {
         },
         registerUser: (body, successCallback, errorCallback) => {
             dispatch(registerUser(body, successCallback, errorCallback));
+        },
+        logoutUser: (successCallback, errorCallback) => {
+            dispatch(logoutUser(successCallback, errorCallback));
         },
     };
 }

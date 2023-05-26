@@ -74,10 +74,10 @@ export default function CustomDataGrid({ data }) {
 const classes = {
     dataGrid: {
         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within': {
-            outline: 'none',
+            outline: 'none !important',
         },
         '& ..MuiDataGrid-cell:focus:focus, & ..MuiDataGrid-cell:focus:focus-within': {
-            outline: 'none',
+            outline: 'none !important',
         },
     },
 };

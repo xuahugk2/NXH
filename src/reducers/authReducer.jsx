@@ -1,16 +1,20 @@
-import { UPDATE_AUTH_INFO } from '../constants/actionType';
+import { UPDATE_AUTH_INFO, LOGOUT } from '../constants/actionType';
 
 const initialState = {
     authInfo: {},
 };
 
 const authReducer = (state = initialState, action) => {
-    if (action.type === UPDATE_AUTH_INFO) {
-        return {
-            ...state, authInfo: action.payload,
-        };
-    } else {
-        return { ...state };
+    switch (action.type) {
+        case UPDATE_AUTH_INFO:
+            return {
+                ...state, authInfo: action.payload,
+            };
+        case LOGOUT:
+            return { ...initialState };
+        default:
+            return { ...state };
+
     }
 };
 

@@ -1,6 +1,6 @@
 import { httpPOST } from './httpAction';
 import { MAPPING } from './../constants/requestMapping';
-import { UPDATE_AUTH_INFO } from '../constants/actionType';
+import { UPDATE_AUTH_INFO, LOGOUT } from '../constants/actionType';
 
 export const loginUser = (body, successCallback, errorCallback) => {
     return (dispatch) => {
@@ -24,9 +24,24 @@ export const registerUser = (body, successCallback, errorCallback) => {
     };
 };
 
+export const logoutUser = (successCallback, errorCallback) => {
+    return (dispatch) => {
+        dispatch(resetAuthInfo());
+        if (successCallback) successCallback();
+        if (errorCallback) errorCallback();
+    };
+};
+
 const updateAuthInfo = (userData) => {
     return {
         type: UPDATE_AUTH_INFO,
         payload: userData,
+    };
+};
+
+const resetAuthInfo = () => {
+    return {
+        type: LOGOUT,
+        payload: undefined,
     };
 };
