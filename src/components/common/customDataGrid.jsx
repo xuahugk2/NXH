@@ -52,7 +52,7 @@ export default function CustomDataGrid({ data }) {
 
     return (
         <DataGrid
-            className={classes.dataGrid}
+            sx={classes.dataGrid}
             columns={columns}
             rows={rows}
             getRowId={getRowId}
@@ -74,10 +74,10 @@ export default function CustomDataGrid({ data }) {
 const classes = {
     dataGrid: {
         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within': {
-            outline: 'none !important',
+            outline: 'none',
         },
-        '& ..MuiDataGrid-cell:focus:focus, & ..MuiDataGrid-cell:focus:focus-within': {
-            outline: 'none !important',
+        '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
+            outline: 'none',
         },
     },
 };
