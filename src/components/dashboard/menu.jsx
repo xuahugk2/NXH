@@ -7,6 +7,9 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Collapse from '@mui/material/Collapse';
 import PeopleIcon from '@mui/icons-material/People';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -30,14 +33,27 @@ export default function MainListItems({ changeItem }) {
             </ListItemButton>
             <Collapse in={openAccount} timeout="auto" unmountOnExit>
                 <List sx={{ pl: 4 }}>
-                    <ListItemButton onClick={() => changeItem('users')}>
+                    <ListItemButton onClick={() => changeItem('user/list')}>
                         <ListItemIcon>
-                            <PeopleIcon />
+                            <ManageAccountsIcon />
                         </ListItemIcon>
                         <ListItemText primary="Management" />
                     </ListItemButton>
+                    <ListItemButton onClick={() => changeItem('user/register')}>
+                        <ListItemIcon>
+                            <PersonAddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="New user" />
+                    </ListItemButton>
                 </List>
             </Collapse>
+
+            <ListItemButton>
+                <ListItemIcon>
+                    <AssignmentIndIcon />
+                </ListItemIcon>
+                <ListItemText primary="Authority" />
+            </ListItemButton>
 
             <Divider sx={{ my: 1 }} />
 

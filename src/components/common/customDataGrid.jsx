@@ -80,5 +80,8 @@ const classes = {
         '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
             outline: 'none',
         },
+        '& .MuiDataGrid-cell .MuiButtonBase-root.MuiButton-root:focus': {
+            outline: 'none',
+        },
     },
 };

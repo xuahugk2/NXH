@@ -14,7 +14,7 @@ import {
 
 export default function Users() {
     const [open, setOpen] = React.useState(false);
-    const [selectedAccountId, setSelectedAccountId] = React.useState('');
+    const [selectedAccount, setSelectedAccount] = React.useState('');
 
     const { getListUser, deleteUser } = useUsersAction();
 
@@ -81,7 +81,7 @@ export default function Users() {
                 },
                 {
                     field: 'action',
-                    headerName: 'Action',
+                    headerName: '',
                     flex: 1,
                     disableColumnMenu: true,
                     sortable: false,
@@ -112,7 +112,8 @@ export default function Users() {
     };
 
     const handleUpdateAccount = (id) => {
-        setSelectedAccountId(id);
+        const user = users.find((value) => value._id === id);
+        setSelectedAccount(user);
         setOpen(true);
     };
 
@@ -122,7 +123,7 @@ export default function Users() {
             <CustomDataGrid
                 data={data}
             />
-            <UpdateAccountDialog open={open} setOpen={setOpen} accountId={selectedAccountId} />
+            <UpdateAccountDialog open={open} setOpen={setOpen} accountData={selectedAccount} />
         </React.Fragment>
     );
 }

@@ -85,7 +85,7 @@ export default function Dashboard() {
 
     const displayItem = React.useMemo(() => {
         switch (component) {
-            case 'users':
+            case 'user/list':
                 return <Users />;
             default:
                 return <Box>Home.</Box>;

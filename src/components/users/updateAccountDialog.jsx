@@ -14,68 +14,84 @@ import PropTypes from 'prop-types';
 UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
-    accountId: PropTypes.string.isRequired,
+    accountData: PropTypes.string.isRequired,
 };
 
-export default function UpdateAccountDialog({ open, setOpen, accountId }) {
+const initialState = {
+    _id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    role: -1,
+};
+
+export default function UpdateAccountDialog({ open, setOpen, accountData }) {
+    const [info, setInfo] = React.useState(initialState);
     const handleClose = () => {
         setOpen(false);
     };
 
     React.useEffect(() => {
-        console.log(accountId);
-    }, [accountId]);
+        setInfo({ ...accountData });
+    }, [accountData]);
 
     return (
-        <Dialog open={open} maxWidth='lg' sx={{ paddingY: 5 }}>
-            <DialogTitle>Update Account Dialog</DialogTitle>
+        <Dialog open={open} maxWidth='sm' sx={classes.dialogStyle}>
+            <DialogTitle textAlign='center'>Update Account Dialog</DialogTitle>
             <DialogContent>
-                <Grid container item xs={12} mt={1}>
-                    <Grid item xs={6}>
-                        <Typography>First Name</Typography>
+                <Grid container>
+                    <Grid container item xs={12} mt={1}>
+                        <Grid item xs={3}>
+                            <Typography>First Name</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                variant='standard'
+                                value={info.firstName}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            size='small'
-                            variant='standard'
-                        />
+                    <Grid container item xs={12} mt={3}>
+                        <Grid item xs={3}>
+                            <Typography>Last Name</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                variant='standard'
+                                value={info.lastName}
+                            />
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container item xs={12} mt={3}>
-                    <Grid item xs={6}>
-                        <Typography>Last Name</Typography>
+                    <Grid container item xs={12} mt={3}>
+                        <Grid item xs={3}>
+                            <Typography>Email</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                variant='standard'
+                                value={info.email}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            size='small'
-                            variant='standard'
-                        />
-                    </Grid>
-                </Grid>
-                <Grid container item xs={12} mt={3}>
-                    <Grid item xs={6}>
-                        <Typography>Email</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            size='small'
-                            variant='standard'
-                        />
-                    </Grid>
-                </Grid>
-                <Grid container item xs={12} mt={3}>
-                    <Grid item xs={6}>
-                        <Typography>Role</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            size='small'
-                            variant='standard'
-                        />
+                    <Grid container item xs={12} mt={3}>
+                        <Grid item xs={3}>
+                            <Typography>Role</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                fullWidth
+                                size='small'
+                                variant='standard'
+                                value={info.role}
+                            />
+                        </Grid>
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -86,3 +102,12 @@ export default function UpdateAccountDialog({ open, setOpen, accountId }) {
         </Dialog>
     );
 }
+
+const classes = {
+    dialogStyle: {
+        '& .MuiPaper-root.MuiDialog-paper .MuiGrid-container .MuiTypography-root': {
+            textAlign: 'right',
+            marginRight: '20px',
+        },
+    },
+};
