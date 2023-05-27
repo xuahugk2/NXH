@@ -17,6 +17,7 @@ UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
     accountData: PropTypes.string.isRequired,
+    handleSuccess: PropTypes.string.isRequired,
 };
 
 const initialState = {
@@ -27,7 +28,7 @@ const initialState = {
     role: -1,
 };
 
-export default function UpdateAccountDialog({ open, setOpen, accountData }) {
+export default function UpdateAccountDialog({ open, setOpen, accountData, handleSuccess }) {
     const [info, setInfo] = React.useState(initialState);
 
     const { authInfo } = useAuthState();
@@ -56,6 +57,7 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
 
     const handleClose = () => {
         setOpen(false);
+        handleSuccess();
     };
 
     return (

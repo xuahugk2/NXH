@@ -15,24 +15,16 @@ export const getListUser = (body, successCallback, errorCallback) => {
 };
 
 export const deleteUser = (param, successCallback, errorCallback) => {
-    return (dispatch) => {
+    return () => {
         const url = MAPPING.USER_ACTION + param;
-        const successFunc = (data) => {
-            dispatch(updateUserList(data));
-            if (successCallback) successCallback();
-        };
-        httpDELETE(url, successFunc, errorCallback);
+        httpDELETE(url, successCallback, errorCallback);
     };
 };
 
 export const updateUser = (param, body, successCallback, errorCallback) => {
-    return (dispatch) => {
+    return () => {
         const url = MAPPING.USER_ACTION + param;
-        const successFunc = (data) => {
-            dispatch(updateUserList(data));
-            if (successCallback) successCallback();
-        };
-        httpPUT(url, body, successFunc, errorCallback);
+        httpPUT(url, body, successCallback, errorCallback);
     };
 };
 

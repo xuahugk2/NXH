@@ -3,10 +3,9 @@ import moment from 'moment/moment';
 import useUsersAction from '../../actions/hooks/usersHook';
 import useUsersState from '../../reducers/hook/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
-import Title from '../common/title';
 import CustomDataGrid from '../common/customDataGrid';
 import UpdateAccountDialog from './updateAccountDialog';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import {
     Delete as DeleteIcon,
     EditNote as EditNoteIcon,
@@ -15,6 +14,7 @@ import {
 export default function Users() {
     const [open, setOpen] = React.useState(false);
     const [selectedAccount, setSelectedAccount] = React.useState('');
+    const [reloadData, setReloadData] = React.useState(true);
 
     const { getListUser, deleteUser } = useUsersAction();
 
@@ -24,7 +24,7 @@ export default function Users() {
     React.useEffect(() => {
         getListUser({ _id: authInfo._id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [reloadData]);
 
     const data = React.useMemo(() => {
         return {
@@ -109,6 +109,7 @@ export default function Users() {
 
     const handleDeleteAccount = (id) => {
         deleteUser(id);
+        handleReloadData();
     };
 
     const handleUpdateAccount = (id) => {
@@ -117,13 +118,19 @@ export default function Users() {
         setOpen(true);
     };
 
+    const handleReloadData = () => {
+        setReloadData(!reloadData);
+    };
+
     return (
         <React.Fragment>
-            <Title>List of Users</Title>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                List of Users
+            </Typography>
             <CustomDataGrid
                 data={data}
             />
-            <UpdateAccountDialog open={open} setOpen={setOpen} accountData={selectedAccount} />
+            <UpdateAccountDialog open={open} setOpen={setOpen} accountData={selectedAccount} handleSuccess={handleReloadData} />
         </React.Fragment>
     );
 }
