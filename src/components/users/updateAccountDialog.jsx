@@ -10,6 +10,8 @@ import {
     DialogTitle,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import useUsersAction from '../../actions/hooks/usersHook';
+import useAuthState from '../../reducers/hook/authHook';
 
 UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -22,19 +24,39 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
     role: -1,
 };
 
 export default function UpdateAccountDialog({ open, setOpen, accountData }) {
     const [info, setInfo] = React.useState(initialState);
-    const handleClose = () => {
-        setOpen(false);
-    };
+
+    const { authInfo } = useAuthState();
+    const { updateUser } = useUsersAction();
 
     React.useEffect(() => {
         setInfo({ ...accountData });
     }, [accountData]);
+
+    const handleInput = (event) => {
+        const { name, value } = event.target;
+
+        setInfo({ ...info, [name]: value });
+    };
+
+    const handleUpdateUser = () => {
+        updateUser(info._id, {
+            reqId: authInfo._id,
+            firstName: info.firstName,
+            lastName: info.lastName,
+            email: info.email,
+            password: accountData.password,
+            role: Number(info.role),
+        }, handleClose);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <Dialog open={open} maxWidth='sm' sx={classes.dialogStyle}>
@@ -50,7 +72,9 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
                                 fullWidth
                                 size='small'
                                 variant='standard'
+                                name='firstName'
                                 value={info.firstName}
+                                onInput={handleInput}
                             />
                         </Grid>
                     </Grid>
@@ -63,7 +87,9 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
                                 fullWidth
                                 size='small'
                                 variant='standard'
+                                name='lastName'
                                 value={info.lastName}
+                                onInput={handleInput}
                             />
                         </Grid>
                     </Grid>
@@ -76,7 +102,9 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
                                 fullWidth
                                 size='small'
                                 variant='standard'
+                                name='email'
                                 value={info.email}
+                                onInput={handleInput}
                             />
                         </Grid>
                     </Grid>
@@ -89,7 +117,9 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
                                 fullWidth
                                 size='small'
                                 variant='standard'
+                                name='role'
                                 value={info.role}
+                                onInput={handleInput}
                             />
                         </Grid>
                     </Grid>
@@ -97,7 +127,7 @@ export default function UpdateAccountDialog({ open, setOpen, accountData }) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>
-                <Button onClick={handleClose}>Update</Button>
+                <Button onClick={handleUpdateUser}>Update</Button>
             </DialogActions>
         </Dialog>
     );

@@ -7,6 +7,10 @@ import {
 } from '../components/snackbars/enqueueSnackbar';
 
 const handleEnqueueSnackbar = (status, message) => {
+    if (!(status && message)) {
+        return;
+    }
+
     switch (status) {
         case 200:
             enqueueSuccessSnackbar(message);
@@ -27,6 +31,7 @@ export const httpGET = async (url, successCallback, errorCallback) => {
         .get(url)
         .then(response => {
             console.log(response);
+            handleEnqueueSnackbar(response.status, response.data.message);
             if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {
@@ -41,6 +46,7 @@ export const httpPOST = async (url, body, successCallback, errorCallback) => {
         .post(url, body)
         .then(response => {
             console.log(response);
+            handleEnqueueSnackbar(response.status, response.data.message);
             if (successCallback) successCallback(response.data.data);
         })
         .catch(error => {

@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MainListItems from './menu';
 import Users from '../users/users';
+import CreateAccount from '../users/createAccount';
 import useAuthState from '../../reducers/hook/authHook';
 import AuthenticateSection from '../common/authenticateSection';
 
@@ -87,6 +88,8 @@ export default function Dashboard() {
         switch (component) {
             case 'user/list':
                 return <Users />;
+            case 'user/create':
+                return <CreateAccount />;
             default:
                 return <Box>Home.</Box>;
         }

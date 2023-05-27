@@ -39,7 +39,7 @@ export default function MainListItems({ changeItem }) {
                         </ListItemIcon>
                         <ListItemText primary="Management" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => changeItem('user/register')}>
+                    <ListItemButton onClick={() => changeItem('user/create')}>
                         <ListItemIcon>
                             <PersonAddIcon />
                         </ListItemIcon>
@@ -48,7 +48,7 @@ export default function MainListItems({ changeItem }) {
                 </List>
             </Collapse>
 
-            <ListItemButton>
+            <ListItemButton onClick={() => changeItem('user/authority')}>
                 <ListItemIcon>
                     <AssignmentIndIcon />
                 </ListItemIcon>
