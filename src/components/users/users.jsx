@@ -5,7 +5,7 @@ import useUsersState from '../../reducers/hook/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
 import CustomDataGrid from '../common/customDataGrid';
 import UpdateAccountDialog from './updateAccountDialog';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import {
     Delete as DeleteIcon,
     EditNote as EditNoteIcon,
@@ -124,9 +124,6 @@ export default function Users() {
 
     return (
         <React.Fragment>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                List of Users
-            </Typography>
             <CustomDataGrid
                 data={data}
             />

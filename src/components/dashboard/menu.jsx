@@ -10,20 +10,31 @@ import PeopleIcon from '@mui/icons-material/People';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
 
 MainListItems.propTypes = {
     changeItem: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
 };
 
-export default function MainListItems({ changeItem }) {
+export default function MainListItems({ changeItem, isOpen }) {
     const [openAccount, setOpenAccount] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!isOpen) {
+            setOpenAccount(isOpen);
+        }
+    }, [isOpen]);
 
     return (
         <React.Fragment>
+            {isOpen &&
+                <ListSubheader component="div" inset>
+                    User section
+                </ListSubheader>
+            }
             <ListItemButton onClick={() => setOpenAccount((open) => !open)}>
                 <ListItemIcon>
                     <PeopleIcon />
@@ -56,16 +67,6 @@ export default function MainListItems({ changeItem }) {
             </ListItemButton>
 
             <Divider sx={{ my: 1 }} />
-
-            <ListSubheader component="div" inset>
-                Saved reports
-            </ListSubheader>
-            <ListItemButton onClick={() => changeItem('')}>
-                <ListItemIcon>
-                    <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Current month" />
-            </ListItemButton>
         </React.Fragment>
     );
 }

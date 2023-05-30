@@ -9,9 +9,6 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MainListItems from './menu';
@@ -87,11 +84,20 @@ export default function Dashboard() {
     const displayItem = React.useMemo(() => {
         switch (component) {
             case 'user/list':
-                return <Users />;
+                return {
+                    title: 'List of Users',
+                    component: <Users />,
+                };
             case 'user/create':
-                return <CreateAccount />;
+                return {
+                    title: 'Create new account',
+                    component: <CreateAccount />,
+                };
             default:
-                return <Box>Home.</Box>;
+                return {
+                    title: 'Dashboard',
+                    component: <Box>Home</Box>,
+                };
         }
 
     }, [component]);
@@ -119,7 +125,7 @@ export default function Dashboard() {
                         noWrap
                         sx={{ flexGrow: 1 }}
                     >
-                        Dashboard
+                        {displayItem.title}
                     </Typography>
                     <IconButton color="inherit">
                         <AuthenticateSection />
@@ -141,7 +147,7 @@ export default function Dashboard() {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    <MainListItems changeItem={setComponent} />
+                    <MainListItems changeItem={setComponent} isOpen={open} />
                 </List>
             </Drawer>
             <Box
@@ -153,15 +159,9 @@ export default function Dashboard() {
                 }}
             >
                 <Toolbar />
-                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Paper>
-                                {displayItem}
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Container>
+                <Box sx={{ padding: 2, height: 'calc(100% - 64px - 32px)' }}>
+                    {displayItem.component}
+                </Box>
             </Box>
         </Box>
     );

@@ -2,14 +2,13 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-
 import { MESSAGE } from '../../constants/message';
 import useUsersAction from '../../actions/hooks/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
@@ -93,53 +92,58 @@ export default function CreateAccount() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-            <Grid container item xs={12} display="flex" flexDirection="column" alignItems="center">
-                <Typography component="h1" variant="h5">
-                    Create new account
-                </Typography>
-                <Box component="form" sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6} mb={1}>
-                            <FormControl fullWidth error>
-                                <TextField
-                                    fullWidth
-                                    name="firstName"
-                                    label="First Name"
-                                    autoComplete="off"
-                                    value={registerInfo.firstName}
-                                    onInput={handleInput}
-                                    error={!!errorMessage.firstName}
-                                    InputProps={{
-                                        endAdornment: errorMessage.firstName && <ErrorOutlineIcon color='error' />,
-                                    }}
-                                />
-                                <FormHelperText sx={{ height: 2 }}>{errorMessage.firstName}</FormHelperText>
-                            </FormControl>
+        <Container component="main" maxWidth="lg">
+            <Grid container display="flex" flexDirection="column" alignItems="center">
+                <Grid container sx={{ mt: 3 }}>
+                    <Grid item xs={3}>
+                        <Typography component="h1" variant="h5">
+                            Choose your avatar
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}></Grid>
+                    <Grid item xs={5}>
+                        <Grid container item xs={12} spacing={2} mb={2}>
+                            <Grid item xs={6}>
+                                <Typography textAlign='left' fontWeight='bold'>First Name</Typography>
+                                <FormControl fullWidth error>
+                                    <TextField
+                                        fullWidth
+                                        name="firstName"
+                                        autoComplete="off"
+                                        value={registerInfo.firstName}
+                                        onInput={handleInput}
+                                        error={!!errorMessage.firstName}
+                                        InputProps={{
+                                            endAdornment: errorMessage.firstName && <ErrorOutlineIcon color='error' />,
+                                        }}
+                                    />
+                                    <FormHelperText sx={{ height: 2 }}>{errorMessage.firstName}</FormHelperText>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography textAlign='left' fontWeight='bold'>Last Name</Typography>
+                                <FormControl fullWidth error>
+                                    <TextField
+                                        fullWidth
+                                        name="lastName"
+                                        autoComplete="off"
+                                        value={registerInfo.lastName}
+                                        onInput={handleInput}
+                                        error={!!errorMessage.lastName}
+                                        InputProps={{
+                                            endAdornment: errorMessage.lastName && <ErrorOutlineIcon color='error' />,
+                                        }}
+                                    />
+                                    <FormHelperText sx={{ height: 2 }}>{errorMessage.lastName}</FormHelperText>
+                                </FormControl>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} sm={6} mb={1}>
-                            <FormControl fullWidth error>
-                                <TextField
-                                    fullWidth
-                                    name="lastName"
-                                    label="Last Name"
-                                    autoComplete="off"
-                                    value={registerInfo.lastName}
-                                    onInput={handleInput}
-                                    error={!!errorMessage.lastName}
-                                    InputProps={{
-                                        endAdornment: errorMessage.lastName && <ErrorOutlineIcon color='error' />,
-                                    }}
-                                />
-                                <FormHelperText sx={{ height: 2 }}>{errorMessage.lastName}</FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} mb={1}>
+                        <Grid item xs={12} mb={2}>
+                            <Typography textAlign='left' fontWeight='bold'>Email Address</Typography>
                             <FormControl fullWidth error>
                                 <TextField
                                     fullWidth
                                     name="email"
-                                    label="Email Address"
                                     autoComplete="off"
                                     value={registerInfo.email}
                                     onInput={handleInput}
@@ -151,11 +155,11 @@ export default function CreateAccount() {
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.email}</FormHelperText>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} mb={1}>
+                        <Grid item xs={12} mb={2}>
                             <FormControl fullWidth error>
+                                <Typography textAlign='left' fontWeight='bold'>Password</Typography>
                                 <TextField
                                     fullWidth
-                                    label="Password"
                                     name="password"
                                     type="password"
                                     autoComplete="off"
@@ -169,33 +173,34 @@ export default function CreateAccount() {
                                 <FormHelperText sx={{ height: 2 }}>{errorMessage.password}</FormHelperText>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} mb={1}>
-                            <FormControl fullWidth error>
-                                <TextField
-                                    fullWidth
-                                    label="Role"
-                                    name="role"
-                                    autoComplete="off"
-                                    value={registerInfo.role}
-                                    onInput={handleInput}
-                                    error={!!errorMessage.role}
-                                    InputProps={{
-                                        endAdornment: errorMessage.role && <ErrorOutlineIcon color='error' />,
-                                    }}
-                                />
-                                <FormHelperText sx={{ height: 2 }}>{errorMessage.role}</FormHelperText>
-                            </FormControl>
+                        <Grid container item xs={12} mb={2}>
+                            <Grid item xs={6}>
+                                <Typography textAlign='left' fontWeight='bold'>Authority</Typography>
+                                <FormControl fullWidth error>
+                                    <Select
+                                        name="role"
+                                        autoComplete="off"
+                                        error={!!errorMessage.role}
+                                        onChange={handleInput}
+                                    >
+                                        <MenuItem value={0}>User</MenuItem>
+                                        <MenuItem value={1}>Admin</MenuItem>
+                                    </Select>
+                                    <FormHelperText sx={{ height: 2 }}>{errorMessage.role}</FormHelperText>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={handleRegister}
+                                >
+                                    Create
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleRegister}
-                    >
-                        Create
-                    </Button>
-                </Box>
+                </Grid>
             </Grid >
         </Container >
     );
