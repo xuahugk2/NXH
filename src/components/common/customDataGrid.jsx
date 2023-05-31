@@ -61,6 +61,8 @@ export default function CustomDataGrid({ data }) {
             onPaginationModelChange={setPaginationModel}
             pageSizeOptions={[paginationModel.pageSize]}
             hideFooterSelectedRowCount
+            showColumnVerticalBorder
+            showCellVerticalBorder
             slots={{
                 pagination: CustomPagination,
                 noRowsOverlay: () =>

@@ -71,9 +71,14 @@ export const httpPUT = async (url, body, successCallback, errorCallback) => {
         });
 };
 
-export const httpDELETE = async (url, successCallback, errorCallback) => {
+export const httpDELETE = async (url, body, successCallback, errorCallback) => {
     await axios
-        .delete(url)
+        .delete(url, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: body,
+        })
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);

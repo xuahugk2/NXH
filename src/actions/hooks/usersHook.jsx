@@ -7,8 +7,8 @@ function useUsersAction() {
         getListUser: (body, successCallback, errorCallback) => {
             dispatch(getListUser(body, successCallback, errorCallback));
         },
-        deleteUser: (params, successCallback, errorCallback) => {
-            dispatch(deleteUser(params, successCallback, errorCallback));
+        deleteUser: (params, body, successCallback, errorCallback) => {
+            dispatch(deleteUser(params, body, successCallback, errorCallback));
         },
         updateUser: (params, body, successCallback, errorCallback) => {
             dispatch(updateUser(params, body, successCallback, errorCallback));

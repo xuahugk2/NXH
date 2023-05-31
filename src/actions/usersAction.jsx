@@ -14,10 +14,10 @@ export const getListUser = (body, successCallback, errorCallback) => {
     };
 };
 
-export const deleteUser = (param, successCallback, errorCallback) => {
+export const deleteUser = (param, body, successCallback, errorCallback) => {
     return () => {
         const url = MAPPING.USER_ACTION + param;
-        httpDELETE(url, successCallback, errorCallback);
+        httpDELETE(url, body, successCallback, errorCallback);
     };
 };
 

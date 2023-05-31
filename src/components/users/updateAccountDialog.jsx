@@ -8,10 +8,12 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    Autocomplete,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import useUsersAction from '../../actions/hooks/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
+import useAuthoritiesState from '../../reducers/hook/authoritiesHook';
 
 UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -34,14 +36,29 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
     const { authInfo } = useAuthState();
     const { updateUser } = useUsersAction();
 
+    const { authorities } = useAuthoritiesState();
+
     React.useEffect(() => {
         setInfo({ ...accountData });
     }, [accountData]);
+
+    const authoritiesAutocompleteData = React.useMemo(() => {
+        return authorities.map((authority) => {
+            return {
+                id: authority.authorityId,
+                label: authority.name,
+            };
+        });
+    }, [authorities]);
 
     const handleInput = (event) => {
         const { name, value } = event.target;
 
         setInfo({ ...info, [name]: value });
+    };
+
+    const handleInputSelect = (name, value) => {
+        setInfo({ ...info, [name]: value.id });
     };
 
     const handleUpdateUser = () => {
@@ -115,13 +132,13 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
                             <Typography>Role</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField
-                                fullWidth
+                            <Autocomplete
+                                name="role"
+                                disablePortal
                                 size='small'
-                                variant='standard'
-                                name='role'
-                                value={info.role}
-                                onInput={handleInput}
+                                options={authoritiesAutocompleteData}
+                                onChange={(e, v) => handleInputSelect('role', v)}
+                                renderInput={(params) => <TextField {...params} />}
                             />
                         </Grid>
                     </Grid>

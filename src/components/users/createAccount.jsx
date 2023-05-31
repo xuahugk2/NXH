@@ -6,12 +6,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Autocomplete from '@mui/material/Autocomplete';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useUsersAction from '../../actions/hooks/usersHook';
+import useAuthoritiesAction from '../../actions/hooks/authoritiesHook';
 import useAuthState from '../../reducers/hook/authHook';
+import useAuthoritiesState from '../../reducers/hook/authoritiesHook';
 
 const initialState = {
     firstName: '',
@@ -28,10 +29,24 @@ export default function CreateAccount() {
     const { createUser } = useUsersAction();
     const { authInfo } = useAuthState();
 
+    const { getListAuthority } = useAuthoritiesAction();
+    const { authorities } = useAuthoritiesState();
+
     const handleInput = (event) => {
         const { name, value } = event.target;
 
         setRegisterInfo({ ...registerInfo, [name]: value });
+
+        if (value) {
+            setErrorMessage({
+                ...errorMessage,
+                [name]: '',
+            });
+        }
+    };
+
+    const handleInputSelect = (name, value) => {
+        setRegisterInfo({ ...registerInfo, [name]: value.id });
 
         if (value) {
             setErrorMessage({
@@ -67,7 +82,9 @@ export default function CreateAccount() {
                 lastName: MESSAGE.REQUIRED,
             };
         }
-        if (!registerInfo.role) {
+
+        const selectedAuthority = authorities.find(auth => auth.authorityId === registerInfo.role);
+        if (!selectedAuthority) {
             cloneErrorMessage = {
                 ...cloneErrorMessage,
                 role: MESSAGE.REQUIRED,
@@ -78,6 +95,15 @@ export default function CreateAccount() {
 
         return cloneErrorMessage.email || cloneErrorMessage.password || cloneErrorMessage.firstName || cloneErrorMessage.lastName;
     };
+
+    const authoritiesAutocompleteData = React.useMemo(() => {
+        return authorities.map((authority) => {
+            return {
+                id: authority.authorityId,
+                label: authority.name,
+            };
+        });
+    }, [authorities]);
 
     const handleRegister = async () => {
         if (checkError()) {
@@ -90,6 +116,11 @@ export default function CreateAccount() {
             role: Number(registerInfo.role),
         });
     };
+
+    React.useEffect(() => {
+        getListAuthority({ _id: authInfo._id });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [authInfo._id]);
 
     return (
         <Container component="main" maxWidth="lg">
@@ -177,15 +208,13 @@ export default function CreateAccount() {
                             <Grid item xs={6}>
                                 <Typography textAlign='left' fontWeight='bold'>Authority</Typography>
                                 <FormControl fullWidth error>
-                                    <Select
+                                    <Autocomplete
                                         name="role"
-                                        autoComplete="off"
-                                        error={!!errorMessage.role}
-                                        onChange={handleInput}
-                                    >
-                                        <MenuItem value={0}>User</MenuItem>
-                                        <MenuItem value={1}>Admin</MenuItem>
-                                    </Select>
+                                        disablePortal
+                                        options={authoritiesAutocompleteData}
+                                        onChange={(e, v) => handleInputSelect('role', v)}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
                                     <FormHelperText sx={{ height: 2 }}>{errorMessage.role}</FormHelperText>
                                 </FormControl>
                             </Grid>
