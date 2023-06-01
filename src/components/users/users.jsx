@@ -27,7 +27,7 @@ export default function Users() {
 
     React.useEffect(() => {
         handleFetchUserDataList();
-        getListAuthority({ _id: authInfo._id });
+        getListAuthority(authInfo._id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authInfo._id]);
 
@@ -129,7 +129,7 @@ export default function Users() {
     };
 
     const handleDeleteAccount = (id) => {
-        deleteUser(id, { reqId: authInfo._id }, handleFetchUserDataList);
+        deleteUser(id, authInfo._id, handleFetchUserDataList);
     };
 
     const handleUpdateAccount = (id) => {
@@ -143,7 +143,7 @@ export default function Users() {
     };
 
     const handleFetchUserDataList = () => {
-        getListUser({ _id: authInfo._id });
+        getListUser(authInfo._id);
     };
 
     return (

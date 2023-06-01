@@ -112,13 +112,12 @@ export default function CreateAccount() {
         }
         createUser({
             ...registerInfo,
-            reqId: authInfo._id,
             role: Number(registerInfo.role),
-        });
+        }, authInfo._id);
     };
 
     React.useEffect(() => {
-        getListAuthority({ _id: authInfo._id });
+        getListAuthority(authInfo._id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authInfo._id]);
 

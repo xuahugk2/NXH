@@ -26,9 +26,13 @@ const handleEnqueueSnackbar = (status, message) => {
     }
 };
 
-export const httpGET = async (url, successCallback, errorCallback) => {
+export const httpGET = async (url, authorization, successCallback, errorCallback) => {
     await axios
-        .get(url)
+        .get(url, {
+            headers: {
+                Authorization: authorization,
+            },
+        })
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
@@ -41,9 +45,13 @@ export const httpGET = async (url, successCallback, errorCallback) => {
         });
 };
 
-export const httpPOST = async (url, body, successCallback, errorCallback) => {
+export const httpPOST = async (url, body, authorization, successCallback, errorCallback) => {
     await axios
-        .post(url, body)
+        .post(url, body, {
+            headers: {
+                Authorization: authorization,
+            },
+        })
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
@@ -56,9 +64,13 @@ export const httpPOST = async (url, body, successCallback, errorCallback) => {
         });
 };
 
-export const httpPUT = async (url, body, successCallback, errorCallback) => {
+export const httpPUT = async (url, body, authorization, successCallback, errorCallback) => {
     await axios
-        .put(url, body)
+        .put(url, body, {
+            headers: {
+                Authorization: authorization,
+            },
+        })
         .then(response => {
             console.log(response);
             handleEnqueueSnackbar(response.status, response.data.message);
@@ -71,13 +83,12 @@ export const httpPUT = async (url, body, successCallback, errorCallback) => {
         });
 };
 
-export const httpDELETE = async (url, body, successCallback, errorCallback) => {
+export const httpDELETE = async (url, authorization, successCallback, errorCallback) => {
     await axios
         .delete(url, {
             headers: {
-                'Content-Type': 'application/json',
+                Authorization: authorization,
             },
-            data: body,
         })
         .then(response => {
             console.log(response);

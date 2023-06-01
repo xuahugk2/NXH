@@ -63,13 +63,12 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
 
     const handleUpdateUser = () => {
         updateUser(info._id, {
-            reqId: authInfo._id,
             firstName: info.firstName,
             lastName: info.lastName,
             email: info.email,
             password: accountData.password,
             role: Number(info.role),
-        }, handleClose);
+        }, authInfo._id, handleClose);
     };
 
     const handleClose = () => {

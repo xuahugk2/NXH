@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://tense-frog-houndstooth.cyclic.app/api';
 
 export const MAPPING = {
     // Authenticate

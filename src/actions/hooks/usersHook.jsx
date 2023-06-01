@@ -4,17 +4,17 @@ import { getListUser, deleteUser, updateUser, createUser } from '../usersAction'
 function useUsersAction() {
     const dispatch = useDispatch();
     return {
-        getListUser: (body, successCallback, errorCallback) => {
-            dispatch(getListUser(body, successCallback, errorCallback));
+        getListUser: (body, authorization, successCallback, errorCallback) => {
+            dispatch(getListUser(body, authorization, successCallback, errorCallback));
         },
-        deleteUser: (params, body, successCallback, errorCallback) => {
-            dispatch(deleteUser(params, body, successCallback, errorCallback));
+        deleteUser: (params, authorization, successCallback, errorCallback) => {
+            dispatch(deleteUser(params, authorization, successCallback, errorCallback));
         },
-        updateUser: (params, body, successCallback, errorCallback) => {
-            dispatch(updateUser(params, body, successCallback, errorCallback));
+        updateUser: (params, body, authorization, successCallback, errorCallback) => {
+            dispatch(updateUser(params, body, authorization, successCallback, errorCallback));
         },
-        createUser: (body, successCallback, errorCallback) => {
-            dispatch(createUser(body, successCallback, errorCallback));
+        createUser: (body, authorization, successCallback, errorCallback) => {
+            dispatch(createUser(body, authorization, successCallback, errorCallback));
         },
     };
 }

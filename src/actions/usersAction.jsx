@@ -1,37 +1,36 @@
 import { httpDELETE, httpGET, httpPOST, httpPUT } from './httpAction';
 import { MAPPING } from './../constants/requestMapping';
 import { UPDATE_LIST_USER } from '../constants/actionType';
-import { serializeParameters } from '../utils/helper';
 
-export const getListUser = (body, successCallback, errorCallback) => {
+export const getListUser = (authorization, successCallback, errorCallback) => {
     return (dispatch) => {
-        const url = MAPPING.GET_LIST_USER + serializeParameters(body);
+        const url = MAPPING.GET_LIST_USER;
         const successFunc = (data) => {
             dispatch(updateUserList(data));
             if (successCallback) successCallback();
         };
-        httpGET(url, successFunc, errorCallback);
+        httpGET(url, authorization, successFunc, errorCallback);
     };
 };
 
-export const deleteUser = (param, body, successCallback, errorCallback) => {
+export const deleteUser = (param, authorization, successCallback, errorCallback) => {
     return () => {
         const url = MAPPING.USER_ACTION + param;
-        httpDELETE(url, body, successCallback, errorCallback);
+        httpDELETE(url, authorization, successCallback, errorCallback);
     };
 };
 
-export const updateUser = (param, body, successCallback, errorCallback) => {
+export const updateUser = (param, body, authorization, successCallback, errorCallback) => {
     return () => {
         const url = MAPPING.USER_ACTION + param;
-        httpPUT(url, body, successCallback, errorCallback);
+        httpPUT(url, body, authorization, successCallback, errorCallback);
     };
 };
 
-export const createUser = (body, successCallback, errorCallback) => {
+export const createUser = (body, authorization, successCallback, errorCallback) => {
     return () => {
         const url = MAPPING.CREATE_USER;
-        httpPOST(url, body, successCallback, errorCallback);
+        httpPOST(url, body, authorization, successCallback, errorCallback);
     };
 };
 
