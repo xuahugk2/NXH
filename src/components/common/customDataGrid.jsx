@@ -67,7 +67,7 @@ export default function CustomDataGrid({ data }) {
                 pagination: CustomPagination,
                 noRowsOverlay: () =>
                     <Stack height="100%" alignItems="center" justifyContent="center">
-                        No rows in DataGrid
+                        No data to display
                     </Stack>,
             }}
         />

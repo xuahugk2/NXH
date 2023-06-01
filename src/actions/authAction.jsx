@@ -9,7 +9,7 @@ export const loginUser = (body, successCallback, errorCallback) => {
             dispatch(updateAuthInfo(data));
             if (successCallback) successCallback();
         };
-        httpPOST(url, body, successFunc, errorCallback);
+        httpPOST(url, body, undefined, successFunc, errorCallback);
     };
 };
 
@@ -20,7 +20,7 @@ export const registerUser = (body, successCallback, errorCallback) => {
             dispatch(updateAuthInfo(data));
             if (successCallback) successCallback();
         };
-        httpPOST(url, body, successFunc, errorCallback);
+        httpPOST(url, body, undefined, successFunc, errorCallback);
     };
 };
 
