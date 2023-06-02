@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-undef */
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = 'https://xuanhung.cyclic.app';
 const API_URL = `${API_BASE_URL}/api`;
 
 export const MAPPING = {
