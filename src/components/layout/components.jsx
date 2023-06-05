@@ -1,5 +1,5 @@
 import {
-    BrowserRouter,
+    HashRouter,
     Route,
     Routes,
 } from 'react-router-dom';
@@ -10,7 +10,7 @@ import Dashboard from '../dashboard/dashboard';
 
 export default function Components() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 {/* Auth */}
                 <Route path='/login' element={<Login />} />
@@ -20,6 +20,6 @@ export default function Components() {
                 {/* Main */}
                 <Route path='/' element={<Dashboard />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
