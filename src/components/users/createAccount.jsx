@@ -10,9 +10,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useUsersAction from '../../actions/hooks/usersHook';
-import useAuthoritiesAction from '../../actions/hooks/authoritiesHook';
+import useCodesAction from '../../actions/hooks/codesHook';
 import useAuthState from '../../reducers/hook/authHook';
-import useAuthoritiesState from '../../reducers/hook/authoritiesHook';
+import useCodesState from '../../reducers/hook/codesHook';
+import { CODE_CLASS } from '../../constants/codeType';
 
 const initialState = {
     firstName: '',
@@ -29,8 +30,8 @@ export default function CreateAccount() {
     const { createUser } = useUsersAction();
     const { authInfo } = useAuthState();
 
-    const { getListAuthority } = useAuthoritiesAction();
-    const { authorities } = useAuthoritiesState();
+    const { getListCode } = useCodesAction();
+    const { codes } = useCodesState();
 
     const handleInput = (event) => {
         const { name, value } = event.target;
@@ -83,7 +84,7 @@ export default function CreateAccount() {
             };
         }
 
-        const selectedAuthority = authorities.find(auth => auth.authorityId === registerInfo.role);
+        const selectedAuthority = codes.find(auth => auth.authorityId === registerInfo.role);
         if (!selectedAuthority) {
             cloneErrorMessage = {
                 ...cloneErrorMessage,
@@ -96,28 +97,29 @@ export default function CreateAccount() {
         return cloneErrorMessage.email || cloneErrorMessage.password || cloneErrorMessage.firstName || cloneErrorMessage.lastName;
     };
 
-    const authoritiesAutocompleteData = React.useMemo(() => {
-        return authorities.map((authority) => {
-            return {
-                id: authority.authorityId,
-                label: authority.name,
-            };
-        });
-    }, [authorities]);
+    const codesAutocompleteData = React.useMemo(() => {
+        return codes
+            .filter((code) => code.codeClass === CODE_CLASS.AUTHORITY)
+            .map((authority) => {
+                return {
+                    id: authority.codeValue,
+                    label: authority.codeName,
+                };
+            });
+    }, [codes]);
 
     const handleRegister = async () => {
         if (checkError()) {
-            console.log('error');
             return;
         }
         createUser({
             ...registerInfo,
-            role: Number(registerInfo.role),
+            role: registerInfo.role,
         }, authInfo._id);
     };
 
     React.useEffect(() => {
-        getListAuthority(authInfo._id);
+        getListCode(authInfo._id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authInfo._id]);
 
@@ -210,7 +212,7 @@ export default function CreateAccount() {
                                     <Autocomplete
                                         name="role"
                                         disablePortal
-                                        options={authoritiesAutocompleteData}
+                                        options={codesAutocompleteData}
                                         onChange={(e, v) => handleInputSelect('role', v)}
                                         renderInput={(params) => <TextField {...params} />}
                                     />

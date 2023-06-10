@@ -5,4 +5,4 @@ export const UPDATE_LIST_USER = 'UPDATE_LIST_USER';
 
 export const LOGOUT = 'LOGOUT';
 
-export const UPDATE_LIST_AUTHORITY = 'UPDATE_LIST_AUTHORITY';
+export const UPDATE_LIST_CODE = 'UPDATE_LIST_CODE';

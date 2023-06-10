@@ -1,10 +1,10 @@
 import * as React from 'react';
 import moment from 'moment/moment';
 import useUsersAction from '../../actions/hooks/usersHook';
-import useAuthoritiesAction from '../../actions/hooks/authoritiesHook';
+import useCodesAction from '../../actions/hooks/codesHook';
 import useUsersState from '../../reducers/hook/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
-import useAuthoritiesState from '../../reducers/hook/authoritiesHook';
+import useCodesState from '../../reducers/hook/codesHook';
 import CustomDataGrid from '../common/customDataGrid';
 import UpdateAccountDialog from './updateAccountDialog';
 import { Button } from '@mui/material';
@@ -12,6 +12,7 @@ import {
     Delete as DeleteIcon,
     EditNote as EditNoteIcon,
 } from '@mui/icons-material';
+import { CODE_CLASS } from '../../constants/codeType';
 
 export default function Users() {
     const [open, setOpen] = React.useState(false);
@@ -22,14 +23,14 @@ export default function Users() {
     const { authInfo } = useAuthState();
     const { users } = useUsersState();
 
-    const { getListAuthority } = useAuthoritiesAction();
-    const { authorities } = useAuthoritiesState();
+    const { getListCode } = useCodesAction();
+    const { codes } = useCodesState();
 
     React.useEffect(() => {
         handleFetchUserDataList();
-        getListAuthority(authInfo._id);
+        handleFetchCodes();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authInfo._id]);
+    }, []);
 
     const data = React.useMemo(() => {
         return {
@@ -112,7 +113,7 @@ export default function Users() {
     }, [users]);
 
     const getAuthorityNameById = (id) => {
-        return authorities.find(a => a.authorityId === id)?.name || '';
+        return codes.filter(code => code.codeClass === CODE_CLASS.AUTHORITY).find(a => a.codeValue === id)?.codeName || '';
     };
 
     const renderActionButtons = (row) => {
@@ -144,6 +145,10 @@ export default function Users() {
 
     const handleFetchUserDataList = () => {
         getListUser(authInfo._id);
+    };
+
+    const handleFetchCodes = () => {
+        getListCode(authInfo._id);
     };
 
     return (

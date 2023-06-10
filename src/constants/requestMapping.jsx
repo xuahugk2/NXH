@@ -12,6 +12,6 @@ export const MAPPING = {
     GET_LIST_USER: `${API_URL}/users/list`,
     USER_ACTION: `${API_URL}/users/`,
     CREATE_USER: `${API_URL}/users/create`,
-    // Authority
-    GET_LIST_AUTHORITY: `${API_URL}/authority/list`,
+    // Code
+    GET_LIST_CODE: `${API_URL}/code/list`,
 };

@@ -13,7 +13,7 @@ import {
 import PropTypes from 'prop-types';
 import useUsersAction from '../../actions/hooks/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
-import useAuthoritiesState from '../../reducers/hook/authoritiesHook';
+import useCodesState from '../../reducers/hook/codesHook';
 
 UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -36,20 +36,20 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
     const { authInfo } = useAuthState();
     const { updateUser } = useUsersAction();
 
-    const { authorities } = useAuthoritiesState();
+    const { codes } = useCodesState();
 
     React.useEffect(() => {
         setInfo({ ...accountData });
     }, [accountData]);
 
-    const authoritiesAutocompleteData = React.useMemo(() => {
-        return authorities.map((authority) => {
+    const codesAutocompleteData = React.useMemo(() => {
+        return codes.map((authority) => {
             return {
                 id: authority.authorityId,
                 label: authority.name,
             };
         });
-    }, [authorities]);
+    }, [codes]);
 
     const handleInput = (event) => {
         const { name, value } = event.target;
@@ -135,7 +135,7 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
                                 name="role"
                                 disablePortal
                                 size='small'
-                                options={authoritiesAutocompleteData}
+                                options={codesAutocompleteData}
                                 onChange={(e, v) => handleInputSelect('role', v)}
                                 renderInput={(params) => <TextField {...params} />}
                             />

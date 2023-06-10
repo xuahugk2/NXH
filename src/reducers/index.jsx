@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import usersReducer from './usersReducer';
-import authoritiesReducer from './authoritiesReducer';
+import codesReducer from './codesReducer';
 
 const rootReducer = combineReducers({
     authState: authReducer,
     usersState: usersReducer,
-    authoritiesState: authoritiesReducer,
+    codesState: codesReducer,
 });
 
 export default rootReducer;
