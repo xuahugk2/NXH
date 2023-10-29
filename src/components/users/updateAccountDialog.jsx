@@ -8,12 +8,14 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Autocomplete,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import useUsersAction from '../../actions/hooks/usersHook';
 import useAuthState from '../../reducers/hook/authHook';
 import useCodesState from '../../reducers/hook/codesHook';
+import { CODE_CLASS } from '../../constants/codeType';
 
 UpdateAccountDialog.propTypes = {
     open: PropTypes.bool.isRequired,
@@ -27,7 +29,7 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    role: -1,
+    role: '',
 };
 
 export default function UpdateAccountDialog({ open, setOpen, accountData, handleSuccess }) {
@@ -38,27 +40,24 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
 
     const { codes } = useCodesState();
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         setInfo({ ...accountData });
     }, [accountData]);
 
     const codesAutocompleteData = React.useMemo(() => {
-        return codes.map((authority) => {
-            return {
-                id: authority.authorityId,
-                label: authority.name,
-            };
-        });
+        return codes
+            .filter(code => code.codeClass == CODE_CLASS.AUTHORITY);
     }, [codes]);
 
-    const handleInput = (event) => {
-        const { name, value } = event.target;
+    const handleInput = (e) => {
+        const { name, value } = e.target;
 
         setInfo({ ...info, [name]: value });
     };
 
-    const handleInputSelect = (name, value) => {
-        setInfo({ ...info, [name]: value.id });
+    const handleInputSelect = (e) => {
+        const { name, value } = e.target;
+        setInfo({ ...info, [name]: value });
     };
 
     const handleUpdateUser = () => {
@@ -131,14 +130,16 @@ export default function UpdateAccountDialog({ open, setOpen, accountData, handle
                             <Typography>Role</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Autocomplete
-                                name="role"
-                                disablePortal
-                                size='small'
-                                options={codesAutocompleteData}
-                                onChange={(e, v) => handleInputSelect('role', v)}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
+                            <Select
+                                fullWidth
+                                name='role'
+                                value={info.role}
+                                onChange={handleInputSelect}
+                            >
+                                {codesAutocompleteData.map(role => {
+                                    return <MenuItem key={role.codeValue} value={role.codeValue}>{role.codeName}</MenuItem>;
+                                })}
+                            </Select>
                         </Grid>
                     </Grid>
                 </Grid>

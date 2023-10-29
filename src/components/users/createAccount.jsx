@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import Autocomplete from '@mui/material/Autocomplete';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { MESSAGE } from '../../constants/message';
 import useUsersAction from '../../actions/hooks/usersHook';
@@ -46,8 +47,9 @@ export default function CreateAccount() {
         }
     };
 
-    const handleInputSelect = (name, value) => {
-        setRegisterInfo({ ...registerInfo, [name]: value.id });
+    const handleInputSelect = (e) => {
+        const { name, value } = e.target;
+        setRegisterInfo({ ...registerInfo, [name]: value });
 
         if (value) {
             setErrorMessage({
@@ -84,7 +86,8 @@ export default function CreateAccount() {
             };
         }
 
-        const selectedAuthority = codes.find(auth => auth.authorityId === registerInfo.role);
+        const selectedAuthority = codes
+            .find(code => code.codeClass === CODE_CLASS.AUTHORITY && code.codeValue === registerInfo.role);
         if (!selectedAuthority) {
             cloneErrorMessage = {
                 ...cloneErrorMessage,
@@ -99,13 +102,7 @@ export default function CreateAccount() {
 
     const codesAutocompleteData = React.useMemo(() => {
         return codes
-            .filter((code) => code.codeClass === CODE_CLASS.AUTHORITY)
-            .map((authority) => {
-                return {
-                    id: authority.codeValue,
-                    label: authority.codeName,
-                };
-            });
+            .filter((code) => code.codeClass === CODE_CLASS.AUTHORITY);
     }, [codes]);
 
     const handleRegister = async () => {
@@ -209,13 +206,16 @@ export default function CreateAccount() {
                             <Grid item xs={6}>
                                 <Typography textAlign='left' fontWeight='bold'>Authority</Typography>
                                 <FormControl fullWidth error>
-                                    <Autocomplete
-                                        name="role"
-                                        disablePortal
-                                        options={codesAutocompleteData}
-                                        onChange={(e, v) => handleInputSelect('role', v)}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
+                                    <Select
+                                        fullWidth
+                                        name='role'
+                                        onChange={handleInputSelect}
+                                        error={!!errorMessage.role}
+                                    >
+                                        {codesAutocompleteData.map(role => {
+                                            return <MenuItem key={role.codeValue} value={role.codeValue}>{role.codeName}</MenuItem>;
+                                        })}
+                                    </Select>
                                     <FormHelperText sx={{ height: 2 }}>{errorMessage.role}</FormHelperText>
                                 </FormControl>
                             </Grid>
